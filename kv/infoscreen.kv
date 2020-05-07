@@ -1,0 +1,81 @@
+#:kivy 1.11.1
+#:import cal calendar
+
+
+<infoScaleLabel@ScaleLabel>:
+    
+
+<InfoScreen>:
+    FloatLayout:
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                Color:
+                    rgb: utils.get_color_from_hex("#e4e4e4")
+        pos_hint: {"top": .89, "x": 0}
+        ImageButton:
+            size_hint: .04, .06
+	        pos_hint: {"top": .98, "center_x": .08}
+            source: os.path.join('.', 'icons', 'Pfeil.png')
+	        on_release:
+                app.root.ids['screen_manager'].transition = SlideTransition(direction='right')
+	            app.change_screen("settings_screen")
+                app.root.ids['screen_manager'].transition = SlideTransition(direction='left')
+
+        GridLayout
+            cols: 1
+            spacing: 2, 2
+            size_hint: .8, .3
+            pos_hint: {"top": .855, "x": .10}
+            BoxLayout:
+                orientation: 'horizontal'
+                Label:
+                    size_hint_x: .25
+                InfoLabel: 
+                    text: 'Name: '
+                Label:
+                    size_hint_x: .4
+                InfoTextInput:
+                    id: my_last_name
+                    text: app.MY_LAST_NAME
+
+            BoxLayout:
+                orientation: 'horizontal'
+                Label:
+                    size_hint_x: .25
+                InfoLabel:
+                    text: 'Vorname: '
+                Label:
+                    size_hint_x: .4
+                InfoTextInput:
+                    id: my_first_name
+                    text: app.MY_FIRST_NAME
+
+            BoxLayout:
+                orientation: 'horizontal'
+                Label:
+                    size_hint_x: .25
+                InfoLabel: 
+                    text: 'E-Mail: '
+                Label:
+                    size_hint_x: .4
+                InfoTextInput:
+                    id: my_email
+                    text: app.MY_EMAIL
+
+            ScaleButton:
+                width: 100
+                background_normal: ''
+                background_color: [1, 0.8, 0, 1]
+                text: '  Speichern  '
+                bold: True
+                font_size: 25
+                on_press:
+                    app.MY_FIRST_NAME = my_first_name.text.strip().title() if my_first_name.text != '' else app.MY_FIRST_NAME
+                    app.MY_LAST_NAME = my_last_name.text.strip().title() if my_last_name.text != '' else app.MY_LAST_NAME
+                    app.MY_EMAIL = my_email.text.strip() if my_email.text != '' else app.MY_EMAIL
+                    app.save_infos(False)
+                    root.ids['my_first_name'].text = ""
+                    root.ids['my_last_name'].text = ""
+                    root.ids['my_email'].text = ""

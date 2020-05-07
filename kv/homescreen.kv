@@ -1,0 +1,326 @@
+#:kivy 1.11.1
+
+
+<HomeScreen>:
+
+    FloatLayout:
+        id: home
+        ScrollView:
+            pos_hint: {"top": .89, "x": 0}
+            size_hint: 1, .89
+            GridLayout:
+                cols: 1
+                # banner grid
+                id: banner_grid
+                spacing: 7
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: '100dp'
+                row_force_default: True
+
+<CheckEmailsPopup>:
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            Color:
+                rgb: utils.get_color_from_hex("#FFFFFF")
+    size_hint: .6, .4
+    auto_dismiss: False
+    GridLayout:
+        cols: 1
+        size_hint_y: 1
+        size_hint_x: .8
+        spacing: 10
+
+        ScaleLabel:
+            size_hint_x: .5
+            halign: 'center'
+            valign: 'middle'
+            text: f'Geben Sie ihr E-Mail Passwort ein, um neu abgezeichnete Berichte zu erhalten, die von der E-Mail [b][color=08f26e]{app.MY_EMAIL}[/color][/b] versendet wurden.'
+            bold: True
+            markup: True
+            font_size: sp(self.height*.13)
+            text_size: root.width, root.height
+
+        TextInput:
+            id: pw
+            size_hint_y: .3
+            size_hint_x: .6
+            # center input
+            padding: 7, self.height / 2.0 - (self.line_height / 2.0), 7, 0
+            password: True
+            write_tab: False
+            multiline: False
+            bold: True
+            font_size: sp(16)
+
+        BoxLayout:
+            size_hint_y: .3
+            spacing: 5
+            ScaleButton:
+                background_normal: ''
+                background_color: 0, .6, .2, 1
+                text: ' Einloggen '
+                font_size: sp(16)
+                on_press:
+                    root.connect(pw.text)
+                    root.dismiss()
+                    root.ids['pw'].text = ""
+            ScaleButton:
+                background_normal: ''
+                background_color: 0, .6, .2, 1
+                text: ' Abbrechen '
+                font_size: sp(16)
+                on_release:
+                    root.dismiss()
+                    root.ids['pw'].text = ""
+
+<RejectEmail>:
+    size_hint: .7, .5
+    auto_dismiss: False
+
+    GridLayout:
+        cols: 1
+        size_hint_x: .8
+        spacing: 5
+        ScaleLabel:
+            halign: 'left'
+            text: f'Begründung:'
+            bold: True
+            font_size: self.height * 0.17
+            text_size: self.width, self.height
+
+        TextInput:
+            id: explanation
+            size_hint_y: .8
+            size_hint_x: .7
+            write_tab: False
+            multiline: True
+            bold: True
+            font_size: 15	
+	
+        ScaleLabel:
+            halign: 'left'
+            text: f'E-Mail Passwort:'
+            bold: True
+            font_size: self.height * 0.17
+            text_size: self.width, self.height
+
+        TextInput:
+            id: pw
+            size_hint_y: .4
+            size_hint_x: .7
+            # center input
+            padding: 7, self.height / 2.0 - (self.line_height / 2.0), 7, 0
+            password: True
+            write_tab: False
+            multiline: False
+            bold: True
+            font_size: 15
+
+        BoxLayout:
+            size_hint_y: .4
+            spacing: 5
+            ScaleButton:
+                bold: True
+                background_normal: ''
+                background_color: utils.get_color_from_hex("#779ECB")
+                text: ' Senden '
+                font_size: sp(16)
+                on_release:
+                    root.dismiss()
+                    root.send_rejection_email(pw.text, explanation.text)
+                    root.ids['pw'].text = ""
+            ScaleButton:
+                bold: True
+                background_normal: ''
+                background_color: utils.get_color_from_hex("#779ECB")
+                text: ' Abbrechen '
+                font_size: sp(16)
+                on_release:
+                    root.dismiss()
+		BoxLayout:
+			size_hint_y: .5
+
+
+
+<AcceptEmail>:
+    size_hint: .6, .4
+    auto_dismiss: False
+
+    GridLayout:
+        cols: 1
+        size_hint_x: .8
+        spacing: 10
+
+        ScaleLabel:
+            halign: 'left'
+            text: f'E-Mail Passwort:'
+            bold: True
+            font_size: self.height * 0.17
+            text_size: self.width, self.height
+
+        TextInput:
+            id: pw
+            size_hint_y: .3
+            size_hint_x: .6
+            # center input
+            padding: 7, self.height / 2.0 - (self.line_height / 2.0), 7, 0
+            password: True
+            write_tab: False
+            multiline: False
+            bold: True
+            font_size: 15
+
+        BoxLayout:
+            size_hint_y: .4
+            spacing: 5
+            ScaleButton:
+                bold: True
+                background_normal: ''
+                background_color: utils.get_color_from_hex("#779ECB")
+                text: ' Senden '
+                font_size: sp(16)
+                on_release:
+                    root.dismiss()
+                    root.send_acceptance_email(pw.text)
+                    root.ids['pw'].text = ""
+            ScaleButton:
+                bold: True
+                background_normal: ''
+                background_color: utils.get_color_from_hex("#779ECB")
+                text: ' Abbrechen '
+                font_size: sp(16)
+                on_release:
+                    root.dismiss()
+
+		BoxLayout:
+			size_hint_y: .3
+
+
+<InfoTextInput@TextInput>:
+    size_hint_y: 0.5
+    pos_hint: {'top': .75, 'x': 0}
+    # top, bottom
+    padding: 7, self.height / 2.0 - (self.line_height / 2.0), 7, 0
+    write_tab: False
+    multiline: False
+    bold: True
+    font_size: 15
+
+
+<InfoLabel@ScaleLabel>:
+    bold: True
+    outline_width: 1
+    size_hint_x: .2
+    font_size: sp(20)
+
+
+<StartInfoPopup>:
+    auto_dismiss: False
+    size_hint: .8, .4
+
+    BoxLayout:
+        orientation: 'vertical'
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: os.path.join('.', 'icons', 'bg.png')
+
+        ScaleButton:
+            background_normal: ''
+            background_down: ''
+            background_color: 0, 0, 0, 0
+            color: 1, 1, 1, 1
+            size_hint: 1, .1
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            text: '  WILLKOMMEN  '
+            bold: True
+            font_size: sp(30)
+
+        GridLayout
+            cols: 1
+            spacing: 2, 2
+            size_hint: .8, .6
+            pos_hint: {"top": .855, "x": .10}
+
+            BoxLayout:
+                orientation: 'horizontal'
+                Label:
+                    size_hint_x: .35
+                InfoLabel:
+                    text: 'Name:                  '
+                Label:
+                    size_hint_x: .4
+                InfoTextInput:
+                    id: my_last_name
+            BoxLayout:
+                orientation: 'horizontal'
+                Label:
+                    size_hint_x: .35
+                InfoLabel:
+                    text: 'Vorname:             '
+                Label:
+                    size_hint_x: .4
+                InfoTextInput:
+                    id: my_first_name
+            BoxLayout:
+                orientation: 'horizontal'
+                Label:
+                    size_hint_x: .35
+                InfoLabel:
+                    text: 'E-Mail:                 '
+                Label:
+                    size_hint_x: .4
+                InfoTextInput:
+                    id: my_email
+
+            ScaleButton:
+                background_normal: ''
+                background_color: [1, .8, 0, 1]
+                font_size: 25
+                text: "  LOS GEHT'S  "
+                bold: True
+                on_press:
+                    app.MY_FIRST_NAME = my_first_name.text.strip().title()
+                    app.MY_LAST_NAME = my_last_name.text.strip().title()
+                    app.MY_EMAIL = my_email.text.strip()
+                    app.save_infos()
+                    root.dismiss() if app.is_filled_out() == True else None
+
+            Label:
+                size_hint_y: 0.2
+
+
+<ErrorPopup>:
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            Color:
+                rgb: utils.get_color_from_hex("#FFFFFFF")
+    size_hint: .6, .4
+    auto_dismiss: False
+    GridLayout:
+        cols: 1
+        size_hint_x: .8
+        spacing: 10
+        ScaleLabel:
+            size_hint_x: .5
+            halign: 'center'
+            valign: 'middle'
+            text: root.error_message
+            bold: True
+            font_size: sp(self.height*.1)
+            text_size: root.width, root.height
+        ScaleButton:
+            bold: True
+            background_normal: ''
+            background_color: utils.get_color_from_hex("#779ECB")
+            text: ' OK '
+            font_size: sp(16)
+            size_hint_y: 0.2
+            on_press:
+                root.dismiss()

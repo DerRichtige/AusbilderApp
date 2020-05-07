@@ -1,0 +1,50 @@
+#:kivy 1.11.1
+
+
+<FinalizedBannerScreen>:
+    FloatLayout:
+        # Date from-to and back button
+        canvas:
+            Color:
+                rgb: utils.get_color_from_hex("#ffffff")
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        pos_hint: {"top": .89, "x": 0}
+        size_hint: 1, .1
+        padding: 30, 10
+
+        ImageButton:
+            source: os.path.join('.', 'icons', 'Pfeil.png')
+            on_release:
+                app.root.ids['screen_manager'].transition = SlideTransition(direction='right')
+                app.change_screen("overview_screen")
+                app.root.ids['screen_manager'].transition = SlideTransition(direction='left')
+            size_hint: .35, .5
+            pos_hint: {"center_y": .5, "center_x": .08}
+
+        ScaleButton:
+			background_normal: ''
+			background_color: (1, 1, 1, 0)
+            size_hint_x: .7
+            id: title
+            pos_hint: {"center_y": .5, "center_x": .5}
+            color: 0,0,0,1
+            text: ""
+            bold: True
+            font_size: self.height*0.3
+
+    FloatLayout:
+        pos_hint: {"top": .78, "x": 0}
+        ScrollView:
+            pos_hint: {"top": 1, "x": 0}
+            size_hint: 1, .83
+            GridLayout:
+                # pdfbanner grid
+                id: pdfbanner_grid
+                cols: 1
+                spacing: 7
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: '100dp'
+                row_force_default: True

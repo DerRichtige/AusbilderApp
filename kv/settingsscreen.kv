@@ -1,0 +1,55 @@
+#:kivy 1.11.1
+
+<SettingsScreen>:
+    FloatLayout:
+
+        BoxLayout:
+            canvas.before:
+                Color:
+                    rgb: utils.get_color_from_hex("#ffffff")
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            pos_hint: {"top": .89, "x": 0}
+            size_hint: 1, .1
+
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgb: utils.get_color_from_hex("#ffffff")
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        pos_hint: {"top": .78, "x": 0}
+        size_hint: 1, .1
+        padding: 15, 10
+
+        ScaleButton:
+            background_normal: ''
+            background_color: 1, 1, 1, 1
+            background_down: ''
+            bold: True
+            pos_hint: {"center_y": .5, "center_x": .3}
+            size_hint: .65, .6
+            color: 0, 0, 0, 1
+            text: " Benutzerinformation "
+            padding: dp(12), dp(12)
+            font_size: self.height*.8
+
+        ImageButton:
+            pos_hint:{"right": 1, "center_y": .5}
+            source: os.path.join('.', 'icons', 'Arrow2.png')
+            on_release:
+                app.change_screen("info_screen")
+            size_hint: None, .4
+            width: 40
+
+    BoxLayout:
+        canvas:
+            Color:
+                rgb: utils.get_color_from_hex("#ffffff")
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        pos_hint: {'top': .67, 'x': 0}        
+      

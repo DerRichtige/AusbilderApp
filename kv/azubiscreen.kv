@@ -1,0 +1,60 @@
+#:kivy 1.11.1
+
+<AzubiScreen>:
+
+    FloatLayout:
+
+        BoxLayout:
+            canvas:
+                Color:
+                    rgb: utils.get_color_from_hex("#FFFFFF")
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            pos_hint: {"top": .89, "x": 0}
+            size_hint: 1, .1
+            padding: 30, 10
+
+            ScaleLabel:
+                color: 0,0,0,1
+                text: "AZUBIS"
+                bold: True
+                padding: dp(12), dp(12)
+                font_size: self.height*0.7
+
+		# Scroll view with design options
+        ScrollView:
+            pos_hint: {"top": .78, "x": 0}
+            size_hint: 1, .78
+
+            GridLayout:
+                # Azubi banner
+                id: azubi_banner
+                cols: 1
+                spacing: 7
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: '100dp'
+                row_force_default: True
+
+
+<Arrow>:
+    size_hint: None, None
+    size: 20, 35
+    pos_hint: {"center_y": .5,"right": .95}
+    canvas.before:
+        Translate:
+            x: 20
+            y: 35
+        Rotate:
+            angle: 180
+            axis: 0,0,1
+
+    ImageButton:
+        source: os.path.join('.', 'icons', 'Pfeil.png')
+        on_release:
+            app.update_overview_screen(root.azubi_name)
+            app.change_screen("overview_screen")
+        size_hint: None, None
+        width: 20
+        height: 35

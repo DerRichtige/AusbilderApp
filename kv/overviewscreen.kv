@@ -1,0 +1,125 @@
+#:kivy 1.11.1
+
+
+<CustBox@BoxLayout>:
+    size_hint: .4, .8
+    padding: 0, 5, 0, 5
+    pos_hint: {"top": .9, "x": .05}
+
+
+<OverviewScreen>:
+
+    FloatLayout:
+        canvas:
+            Color:
+                rgb: utils.get_color_from_hex("#FFFFFF")
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        pos_hint: {"top": .89, "x": 0}
+        size_hint: 1, .1
+        padding: 30, 10
+
+        ImageButton:
+            source: os.path.join('.', 'icons', 'Pfeil.png')
+            on_release:
+                app.root.ids['screen_manager'].transition = SlideTransition(direction='right')
+                app.change_screen("azubi_screen")
+                app.root.ids['screen_manager'].transition = SlideTransition(direction='left')
+            size_hint: .4, .5
+            pos_hint: {"center_y": .5, "center_x": .08}
+
+        ScaleButton:
+            id: azubi_name
+            background_normal: ''
+			background_color: (1, 1, 1, 0)
+            size_hint_x: .7
+            pos_hint: {"center_y": .5, "center_x": .5}
+            color: 0,0,0,1
+            text: "AZUBIS"
+            bold: True
+            padding: dp(12), dp(12)
+            font_size: self.height*0.3
+
+    GridLayout:
+        pos_hint: {"top": .78, "x": 0}
+        rows: 1
+        cols: 1
+        canvas:
+            Color:
+                rgb: utils.get_color_from_hex("#9aa5be")
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        FloatLayout:
+
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint: 1, .3
+                pos_hint: {"top": .88, "x": .1}
+
+                CustBox:
+                    ScaleButton:
+                        canvas.before:
+                            Color:
+                                rgba: (0,0.6,0.2,1)
+                            RoundedRectangle:
+                                pos: self.pos
+                                size: self.size
+                                radius: [10,]
+                        background_color: (1,1,1,0.1)
+                        text: "   ERSTES LEHRJAHR   "
+                        font_size: 0.7*self.height
+                        bold: True
+                        on_press:
+                            app.completed_pdf_banners(1)
+                            app.change_screen("finalizedbanner_screen")
+                CustBox:
+                    ScaleButton:
+                        canvas.before:
+                            Color:
+                                rgba: (0,0.6,0.2,1)
+                            RoundedRectangle:
+                                pos: self.pos
+                                size: self.size
+                                radius: [10,]
+                        background_color: (1,1,1,0.1)
+                        text: "   ZWEITES LEHRJAHR   "
+                        font_size: 0.7*self.height
+                        bold: True
+                        on_press:
+                            app.completed_pdf_banners(2)
+                            app.change_screen("finalizedbanner_screen")
+                CustBox:
+                    ScaleButton:
+                        canvas.before:
+                            Color:
+                                rgba: (0,0.6,0.2,1)
+                            RoundedRectangle:
+                                pos: self.pos
+                                size: self.size
+                                radius: [10,]
+                        background_color: (1,1,1,0.1)
+                        text: "   DRITTES LEHRJAHR   "
+                        font_size: 0.7*self.height
+                        bold: True
+                        on_press:
+                            app.completed_pdf_banners(3)
+                            app.change_screen("finalizedbanner_screen")
+
+                BoxLayout:
+                    spacing: 10
+                    ImageButton:
+                        source: os.path.join('.', 'icons', 'genehmigt.png')
+                        pos_hint: {"top": .9}
+                        size_hint: .5, .8
+                    ScaleLabel:
+                        id: approved
+                        text: "10"
+                        font_size: 0.5*self.height
+                        text_size: self.size
+                        valign: 'middle'
+                        halign: 'left'
+                        pos_hint: {"top": .9}
+                        size_hint_y: .8

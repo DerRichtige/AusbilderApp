@@ -1,0 +1,97 @@
+#:kivy 1.11.1
+
+<PencilColor@Button>:
+	canvas.before:
+		Color:
+			rgb: (1,0,0,1)
+		Line:
+			width: 2
+			rectangle: self.x, self.y, self.width, self.height
+	background_normal: ''
+	size_hint: 0.05, 0.1
+
+<SignatureScreen>:
+    id: sig_screen
+	drawing: drawing
+    FloatLayout:
+		canvas.before:
+			Color:
+				rgb: (1,1,1,1)
+			Rectangle:
+				pos: self.pos
+				size: self.size
+
+	    Pencil:
+			id: drawing
+            sig_screen: sig_screen
+
+	    PencilColor:
+	        background_color: (0,0,0, 1)
+			pos_hint: {"top": .2, "x": .1}
+	        on_press:
+	            root.give_black()
+
+	    PencilColor:
+	        background_color: (0.0, 0.0, 1.0, 1.0)
+	        pos_hint: {"top": .2, "x": .2}
+	        on_release:
+	            root.give_blue()
+
+		Label:
+			canvas.before:
+				Color:
+					rgb: (0,1,0,1)
+				Line:
+					width: 7
+					points: 0.1*root.width,0.3*root.height,0.9*root.width,0.3*root.height
+
+		ScaleButton:
+			id: save
+			background_normal: ''
+			background_color: (1, 1, 1, 0.2)
+			canvas.before:
+				Color:
+					rgba: (.32, .65, .82, 0.5)
+				RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [10,]
+			text: ' SPEICHERN '
+			font_size: sp(18)
+			bold: True
+			color: 0, 0.8, 0.2, 1
+			size_hint: 0.2, 0.1
+			pos_hint: {"top": .2, "x": .5}
+			on_press:
+				root.save_sig()
+                app.save_signature()
+
+		ScaleButton:
+			id: delete
+			background_normal: ''
+			background_color: (1, 1, 1, 0.2)
+			canvas.before:
+				Color:
+					rgba: (.32, .65, .82, 0.5)
+				RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [10,]
+			text: '  LÖSCHEN   '
+			font_size: sp(18)
+			bold: True
+			color: 1, 0, 0, 1
+			size_hint: .2, .1
+			pos_hint: {"top": .2, "x": .73}
+			on_press:
+				root.clear_sig()
+
+        ImageButton:
+            size_hint: .1, .1
+	        #size: 55, 55
+	        pos_hint: {"top": .9, "x": .1}
+            source: os.path.join('.', 'icons', 'x.png')
+	        on_release:
+				app.root.ids['screen_manager'].transition = SlideTransition(direction='right')
+	            app.change_screen("home_screen")
+				app.root.ids['screen_manager'].transition = SlideTransition(direction='left')

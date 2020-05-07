@@ -1,0 +1,14 @@
+\newcommand{\Week}[1]{
+\begin{center}
+\end{center}
+}
+
+\newcommand{\Signature}[1]{
+\vspace{\fill}
+
+\begin{tabularx}{\textwidth}{p{0.1cm} p{0.2cm} X p{6.25cm} p{0,1cm}  p{0.1cm} p{0.2cm} X p{6.25cm} p{0.01cm}}
+& & & & & & & & & \\[1.8em]
+& & & & & \multicolumn{5}{l}{{\ \ \ \ \Large #1,}}\\[-1.5cm] 
+& & & & & \multicolumn{5}{r}{\ \includegraphics[width=5.5cm,height=2cm]{$signatureTrainer}} \\[-7.5mm]
+& \hspace{1cm} & &  & & & \hspace{1cm} & & \hspace{4cm} \\[0.5cm] 
+\end{tabularx}}
